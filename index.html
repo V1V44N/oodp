@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibraVault — University Library Management System</title>
+    <meta name="description" content="A modern university library management system built with C++ backend demonstrating OOP principles.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    <line x1="8" y1="7" x2="16" y2="7"/>
+                    <line x1="8" y1="11" x2="13" y2="11"/>
+                </svg>
+            </div>
+            <span class="brand-text">LibraVault</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-link active" data-page="dashboard" id="nav-dashboard">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-link" data-page="catalogue" id="nav-catalogue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span>Catalogue</span>
+            </a>
+            <a href="#" class="nav-link" data-page="members" id="nav-members">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Members</span>
+            </a>
+            <a href="#" class="nav-link" data-page="transactions" id="nav-transactions">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                <span>Borrow / Return</span>
+            </a>
+            <a href="#" class="nav-link" data-page="search" id="nav-search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Search</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content" id="mainContent">
+
+        <!-- ===== HEADER ===== -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="status-badge" id="serverStatus">
+                    <span class="status-dot"></span>
+                    <span>Server Connected</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== PAGE: DASHBOARD ===== -->
+        <section class="page active" id="page-dashboard">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card" style="--accent: #6366f1;">
+                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="statTotalItems">0</span>
+                        <span class="stat-label">Total Items</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #8b5cf6;">
+                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="statBooks">0</span>
+                        <span class="stat-label">Books</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #ec4899;">
+                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="statMagazines">0</span>
+                        <span class="stat-label">Magazines</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #10b981;">
+                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="statAvailable">0</span>
+                        <span class="stat-label">Available</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #f59e0b;">
+                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="statBorrowed">0</span>
+                        <span class="stat-label">Borrowed</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #06b6d4;">
+                    <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="statMembers">0</span>
+                        <span class="stat-label">Members</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PAGE: CATALOGUE ===== -->
+        <section class="page" id="page-catalogue">
+            <div class="page-actions">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
+                    <button class="filter-btn" data-filter="Book" id="filter-books">Books</button>
+                    <button class="filter-btn" data-filter="Magazine" id="filter-magazines">Magazines</button>
+                </div>
+                <div class="catalogue-search">
+                    <select id="catalogueSearchBy" class="form-select" style="padding: 8px 12px; font-size: 0.85rem;">
+                        <option value="title">Title</option>
+                        <option value="author">Author</option>
+                    </select>
+                    <input type="text" id="catalogueSearchInput" class="form-input" placeholder="Search..." style="padding: 8px 12px; font-size: 0.85rem; width: 200px;">
+                </div>
+                <button class="btn btn-primary" id="addItemBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Item
+                </button>
+            </div>
+            <div class="items-list" id="itemsGrid"></div>
+        </section>
+
+        <!-- ===== PAGE: MEMBERS ===== -->
+        <section class="page" id="page-members">
+            <div class="page-actions">
+                <button class="btn btn-primary" id="addMemberBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Member
+                </button>
+            </div>
+            <div class="members-grid" id="membersGrid"></div>
+        </section>
+
+        <!-- ===== PAGE: TRANSACTIONS ===== -->
+        <section class="page" id="page-transactions">
+            <div class="transactions-container">
+                <div class="transaction-card">
+                    <h2>📖 Borrow Item</h2>
+                    <form id="borrowForm" class="transaction-form">
+                        <div class="form-group">
+                            <label for="borrowMemberId">Member ID</label>
+                            <select id="borrowMemberId" class="form-select" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="borrowItemId">Item (Available Only)</label>
+                            <select id="borrowItemId" class="form-select" required></select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Borrow Item</button>
+                    </form>
+                </div>
+                <div class="transaction-card">
+                    <h2>🔄 Return Item</h2>
+                    <form id="returnForm" class="transaction-form">
+                        <div class="form-group">
+                            <label for="returnMemberId">Member ID</label>
+                            <select id="returnMemberId" class="form-select" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="returnItemId">Borrowed Item</label>
+                            <select id="returnItemId" class="form-select" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="daysOverdue">Days Overdue</label>
+                            <input type="number" id="daysOverdue" class="form-input" min="0" value="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-accent btn-full">Return Item</button>
+                    </form>
+                </div>
+            </div>
+            <div class="result-box" id="transactionResult" style="display:none;"></div>
+        </section>
+
+        <!-- ===== PAGE: SEARCH ===== -->
+        <section class="page" id="page-search">
+            <div class="search-container">
+                <form id="searchForm" class="search-form">
+                    <input type="number" id="searchId" class="search-input" placeholder="Enter Item ID..." min="1" required>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <div class="search-result" id="searchResult"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== MODAL: Add Item ===== -->
+    <div class="modal-overlay" id="addItemModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add New Item</h2>
+                <button class="modal-close" id="closeItemModal">&times;</button>
+            </div>
+            <form id="addItemForm" class="modal-form">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="itemType" class="form-select" required>
+                        <option value="Book">Book</option>
+                        <option value="Magazine">Magazine</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="itemTitle" class="form-input" required placeholder="Enter title...">
+                </div>
+                <div class="form-group">
+                    <label>Year Published</label>
+                    <input type="number" id="itemYear" class="form-input" required value="2024" min="1000" max="2030">
+                </div>
+                <!-- Book fields -->
+                <div id="bookFields">
+                    <div class="form-group">
+                        <label>Author</label>
+                        <input type="text" id="itemAuthor" class="form-input" placeholder="Author name...">
+                    </div>
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" id="itemISBN" class="form-input" placeholder="978-...">
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <input type="text" id="itemGenre" class="form-input" placeholder="Genre...">
+                    </div>
+                </div>
+                <!-- Magazine fields -->
+                <div id="magazineFields" style="display:none;">
+                    <div class="form-group">
+                        <label>Issue Number</label>
+                        <input type="number" id="itemIssue" class="form-input" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Publisher</label>
+                        <input type="text" id="itemPublisher" class="form-input" placeholder="Publisher...">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" id="itemCategory" class="form-input" placeholder="Category...">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Add to Catalogue (+=)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Add Member ===== -->
+    <div class="modal-overlay" id="addMemberModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add New Member</h2>
+                <button class="modal-close" id="closeMemberModal">&times;</button>
+            </div>
+            <form id="addMemberForm" class="modal-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="memberName" class="form-input" required placeholder="Full name...">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="memberEmail" class="form-input" required placeholder="email@uni.edu">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" id="memberPhone" class="form-input" placeholder="555-0000">
+                </div>
+                <div class="form-group">
+                    <label>Membership Type</label>
+                    <select id="memberType" class="form-select">
+                        <option value="Standard">Standard (Limit: 3)</option>
+                        <option value="Premium">Premium (Limit: 6, 50% fine discount)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Add Member</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
