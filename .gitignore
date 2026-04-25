@@ -1,0 +1,21 @@
+# Executables
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+
+# Debug files
+*.pdb
+*.ilk
+
+# VS Code / IDE settings
+.vscode/
+.idea/
+*.swp
+
+# OS generated files
+Thumbs.db
+.DS_Store
