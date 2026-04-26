@@ -105,14 +105,6 @@ async function api(path, options = {}) {
     }
 }
 
-function showToast(msg, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = 'toast ' + type;
-    toast.textContent = msg;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 4000);
-}
 
 // ===== Dashboard =====
 function renderStats(s) {
@@ -311,7 +303,6 @@ document.getElementById('borrowForm').addEventListener('submit', async e => {
         resultBox.className = 'result-box ' + (data.success ? 'success' : 'error');
         resultBox.textContent = data.message;
         if (data.success) {
-            showToast('Item borrowed successfully!', 'success');
             loadTransactionData();
         }
     } catch (err) {
@@ -338,7 +329,6 @@ document.getElementById('returnForm').addEventListener('submit', async e => {
         resultBox.className = 'result-box ' + (data.success ? 'success' : 'error');
         resultBox.textContent = data.message;
         if (data.success) {
-            showToast(data.message, 'success');
             loadTransactionData();
         }
     } catch (err) {
@@ -365,7 +355,6 @@ document.getElementById('searchForm').addEventListener('submit', async e => {
 
     if (item.error) {
         resultDiv.innerHTML = `<div class="result-box error">❌ ItemNotFoundException: Item with ID ${id} not found in catalogue.</div>`;
-        showToast('ItemNotFoundException thrown!', 'error');
     } else {
         const isBook = item.type === 'Book';
         resultDiv.innerHTML = `
@@ -386,7 +375,6 @@ document.getElementById('searchForm').addEventListener('submit', async e => {
                 ${item.available ? 'Available' : 'Borrowed'}
             </span>
         </div>`;
-        showToast('Item found via Catalogue<T>::findById()', 'success');
     }
 });
 
@@ -417,14 +405,11 @@ document.getElementById('addItemForm').addEventListener('submit', async e => {
             body
         });
         if (data.success) {
-            showToast(data.message + ' (using += operator)', 'success');
             addItemModal.classList.remove('active');
             document.getElementById('addItemForm').reset();
             loadItems();
-        } else {
-            showToast(data.message, 'error');
         }
-    } catch (err) { showToast('Server error', 'error'); }
+    } catch (err) { }
 });
 
 // ===== Add Member Modal =====
@@ -443,14 +428,11 @@ document.getElementById('addMemberForm').addEventListener('submit', async e => {
             body
         });
         if (data.success) {
-            showToast(data.message, 'success');
             addMemberModal.classList.remove('active');
             document.getElementById('addMemberForm').reset();
             loadMembers();
-        } else {
-            showToast(data.message, 'error');
         }
-    } catch (err) { showToast('Server error', 'error'); }
+    } catch (err) { }
 });
 
 // ===== Init: Load ALL pages on startup =====
