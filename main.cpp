@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-/*
- * ============================================================
  *  Library Management System - Console Demonstration
  *  Demonstrates all OOP principles and advanced C++ features
  *  Compile: g++ -std=c++17 -o main main.cpp
@@ -16,7 +13,6 @@ int main() {
     std::cout << "=============================================\n";
     std::cout << "   LIBRARY MANAGEMENT SYSTEM - CONSOLE DEMO  \n";
     std::cout << "=============================================\n\n";
-=======
 #include <string>
 #include <vector>
 #include <map>
@@ -563,7 +559,7 @@ int main() {
     cout << "=============================================\n";
     cout << "   LIBRARY MANAGEMENT SYSTEM - CONSOLE DEMO  \n";
     cout << "=============================================\n\n";
->>>>>>> dev
+
 
     // ----------------------------------------------------------
     // 1. Create the Library (Main System Class)
@@ -574,11 +570,9 @@ int main() {
     // 2. Create Book and Magazine objects, add via overloaded +=
     //    Demonstrates: Inheritance, Operator Overloading (+=)
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "[+] Adding items using overloaded += operator...\n\n";
-=======
+
     cout << "[+] Adding items using overloaded += operator...\n\n";
->>>>>>> dev
+
 
     lib += new Book(1, "The C++ Programming Language", 2013,
                     "Bjarne Stroustrup", "978-0321563842", "Programming");
@@ -602,31 +596,22 @@ int main() {
     // 3. Print all items using overloaded << operator
     //    Demonstrates: Operator Overloading (<<)
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << lib;
-=======
+
     cout << lib;
->>>>>>> dev
+
 
     // ----------------------------------------------------------
     // 4. Demonstrate POLYMORPHISM
     //    Loop through a vector<LibraryItem*> and call virtual methods
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "\n--- Polymorphism Demo: Calling virtual methods ---\n";
-    const auto& items = lib.getCatalogue().getItems();
-    for (const auto& item : items) {
-        std::cout << "  Type: " << std::left << std::setw(10) << item->getType()
-                  << " | Fine (5 days overdue): $"
-                  << std::fixed << std::setprecision(2)
-=======
+
     cout << "\n--- Polymorphism Demo: Calling virtual methods ---\n";
     const auto& items = lib.getCatalogue().getItems();
     for (const auto& item : items) {
         cout << "  Type: " << left << setw(10) << item->getType()
                   << " | Fine (5 days overdue): $"
                   << fixed << setprecision(2)
->>>>>>> dev
+
                   << item->calculateFine(5) << "\n";
     }
 
@@ -634,21 +619,17 @@ int main() {
     // 5. Create Members (Standard and Premium)
     //    Demonstrates: Inheritance (PremiumMember : Member)
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "\n[+] Adding members...\n";
-=======
+
     cout << "\n[+] Adding members...\n";
->>>>>>> dev
+
     lib.addMember(new Member(101, "Alice Johnson", "alice@uni.edu", "555-0101"));
     lib.addMember(new Member(102, "Charlie Brown", "charlie@uni.edu", "555-0103"));
     lib.addMember(new PremiumMember(103, "Bob Smith", "bob@uni.edu", "555-0102", 0.5));
 
     for (const auto& m : lib.getMembers()) {
-<<<<<<< HEAD
-        std::cout << "  " << m->getMemberType() << " Member: "
-=======
+
         cout << "  " << m->getMemberType() << " Member: "
->>>>>>> dev
+
                   << m->getName() << " (Limit: " << m->getBorrowLimit() << ")\n";
     }
 
@@ -656,26 +637,7 @@ int main() {
     // 6. Simulate Borrowing and Returning
     //    Demonstrates: Exception Handling, Polymorphic fine calc
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "\n--- Borrowing & Returning Demo ---\n";
 
-    // Alice borrows "The C++ Programming Language" (Book, ID 1)
-    lib.borrowItem(101, 1);
-    std::cout << "  Alice borrowed item 1 (Book).\n";
-
-    // Bob (Premium) borrows "Nature" (Magazine, ID 7)
-    lib.borrowItem(103, 7);
-    std::cout << "  Bob (Premium) borrowed item 7 (Magazine).\n";
-
-    // Return with fines
-    double fineAlice = lib.returnItem(101, 1, 5);
-    std::cout << "  Alice returned item 1, 5 days late. Fine: $"
-              << std::fixed << std::setprecision(2) << fineAlice << "\n";
-
-    double fineBob = lib.returnItem(103, 7, 5);
-    std::cout << "  Bob returned item 7, 5 days late. Fine: $"
-              << std::fixed << std::setprecision(2) << fineBob
-=======
     cout << "\n--- Borrowing & Returning Demo ---\n";
 
     // Alice borrows "The C++ Programming Language" (Book, ID 1)
@@ -694,49 +656,38 @@ int main() {
     double fineBob = lib.returnItem(103, 7, 5);
     cout << "  Bob returned item 7, 5 days late. Fine: $"
               << fixed << setprecision(2) << fineBob
->>>>>>> dev
+
               << " (Premium 50% discount!)\n";
 
     // ----------------------------------------------------------
     // 7. Demonstrate Template: search by ID using Catalogue<T>
     //    Demonstrates: Templates
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "\n--- Template Search Demo ---\n";
-    try {
-        LibraryItem* found = lib.getCatalogue().findById(3);
-        std::cout << "  Found: " << *found << "\n";
-    } catch (const ItemNotFoundException& e) {
-        std::cout << "  Error: " << e.what() << "\n";
-=======
+
     cout << "\n--- Template Search Demo ---\n";
     try {
         LibraryItem* found = lib.getCatalogue().findById(3);
         cout << "  Found: " << *found << "\n";
     } catch (const ItemNotFoundException& e) {
         cout << "  Error: " << e.what() << "\n";
->>>>>>> dev
+
     }
 
     // ----------------------------------------------------------
     // 8. Trigger and Catch Custom Exceptions
     //    Demonstrates: Exception Handling
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "\n--- Exception Handling Demo ---\n";
-=======
+
     cout << "\n--- Exception Handling Demo ---\n";
->>>>>>> dev
+
 
     // a) ItemNotFoundException: search for non-existent ID
     try {
         lib.getCatalogue().findById(999);
     } catch (const ItemNotFoundException& e) {
-<<<<<<< HEAD
-        std::cout << "  Caught ItemNotFoundException: " << e.what() << "\n";
-=======
+
         cout << "  Caught ItemNotFoundException: " << e.what() << "\n";
->>>>>>> dev
+
     }
 
     // b) MemberLimitExceededException: exceed borrow limit
@@ -747,19 +698,7 @@ int main() {
         lib.borrowItem(101, 4);
         lib.borrowItem(101, 5);  // This should throw
     } catch (const MemberLimitExceededException& e) {
-<<<<<<< HEAD
-        std::cout << "  Caught MemberLimitExceededException: " << e.what() << "\n";
-    }
 
-    // c) Operator== comparison
-    std::cout << "\n--- Operator== Demo ---\n";
-    const auto& allItems = lib.getCatalogue().getItems();
-    if (*allItems[0] == *allItems[0]) {
-        std::cout << "  Item 0 == Item 0: true (same ID)\n";
-    }
-    if (!(*allItems[0] == *allItems[1])) {
-        std::cout << "  Item 0 == Item 1: false (different IDs)\n";
-=======
         cout << "  Caught MemberLimitExceededException: " << e.what() << "\n";
     }
 
@@ -771,22 +710,17 @@ int main() {
     }
     if (!(*allItems[0] == *allItems[1])) {
         cout << "  Item 0 == Item 1: false (different IDs)\n";
->>>>>>> dev
+
     }
 
     // ----------------------------------------------------------
     // 9. Final state
     // ----------------------------------------------------------
-<<<<<<< HEAD
-    std::cout << "\n--- Final Library State ---\n";
-    std::cout << lib;
 
-    std::cout << "\n[✓] All OOP principles and C++ features demonstrated!\n";
-=======
     cout << "\n--- Final Library State ---\n";
     cout << lib;
 
     cout << "\n[✓] All OOP principles and C++ features demonstrated!\n";
->>>>>>> dev
+
     return 0;
 }

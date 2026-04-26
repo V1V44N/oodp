@@ -33,12 +33,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-<<<<<<< HEAD
-#include <map>
-#include <cstring>
-#include <algorithm>
-#include "library_system.h"
-=======
+
 #include <vector>
 #include <map>
 #include <cstring>
@@ -578,7 +573,7 @@ public:
     }
 };
 
->>>>>>> dev
+
 
 // ---- Global Library instance with sample data ----
 Library* gLibrary = nullptr;
@@ -644,22 +639,7 @@ void initSampleData() {
 
 // ---- Utility functions ----
 
-<<<<<<< HEAD
-std::string getMimeType(const std::string& path) {
-    if (path.find(".html") != std::string::npos) return "text/html";
-    if (path.find(".css")  != std::string::npos) return "text/css";
-    if (path.find(".js")   != std::string::npos) return "application/javascript";
-    if (path.find(".json") != std::string::npos) return "application/json";
-    if (path.find(".png")  != std::string::npos) return "image/png";
-    if (path.find(".ico")  != std::string::npos) return "image/x-icon";
-    return "text/plain";
-}
 
-std::string readFile(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
-    if (!file.is_open()) return "";
-    std::ostringstream ss;
-=======
 string getMimeType(const string& path) {
     if (path.find(".html") != string::npos) return "text/html";
     if (path.find(".css")  != string::npos) return "text/css";
@@ -674,26 +654,19 @@ string readFile(const string& path) {
     ifstream file(path, ios::binary);
     if (!file.is_open()) return "";
     ostringstream ss;
->>>>>>> dev
+
     ss << file.rdbuf();
     return ss.str();
 }
 
-<<<<<<< HEAD
-std::string buildResponse(int status, const std::string& contentType,
-                           const std::string& body) {
-    std::string statusText = (status == 200) ? "OK" :
-                             (status == 404) ? "Not Found" :
-                             (status == 400) ? "Bad Request" : "Internal Server Error";
-    std::ostringstream r;
-=======
+
 string buildResponse(int status, const string& contentType,
                            const string& body) {
     string statusText = (status == 200) ? "OK" :
                              (status == 404) ? "Not Found" :
                              (status == 400) ? "Bad Request" : "Internal Server Error";
     ostringstream r;
->>>>>>> dev
+
     r << "HTTP/1.1 " << status << " " << statusText << "\r\n"
       << "Content-Type: " << contentType << "\r\n"
       << "Content-Length: " << body.size() << "\r\n"
@@ -707,19 +680,7 @@ string buildResponse(int status, const string& contentType,
 }
 
 // Parse simple key=value from a query string or POST body
-<<<<<<< HEAD
-std::map<std::string, std::string> parseParams(const std::string& data) {
-    std::map<std::string, std::string> params;
-    std::istringstream stream(data);
-    std::string pair;
-    while (std::getline(stream, pair, '&')) {
-        auto eq = pair.find('=');
-        if (eq != std::string::npos) {
-            std::string key = pair.substr(0, eq);
-            std::string val = pair.substr(eq + 1);
-            // Simple URL decode for + and %20
-            std::replace(val.begin(), val.end(), '+', ' ');
-=======
+
 map<string, string> parseParams(const string& data) {
     map<string, string> params;
     istringstream stream(data);
@@ -731,7 +692,7 @@ map<string, string> parseParams(const string& data) {
             string val = pair.substr(eq + 1);
             // Simple URL decode for + and %20
             replace(val.begin(), val.end(), '+', ' ');
->>>>>>> dev
+
             params[key] = val;
         }
     }
@@ -739,15 +700,7 @@ map<string, string> parseParams(const string& data) {
 }
 
 // URL-decode a string (basic)
-<<<<<<< HEAD
-std::string urlDecode(const std::string& s) {
-    std::string result;
-    for (size_t i = 0; i < s.size(); i++) {
-        if (s[i] == '%' && i + 2 < s.size()) {
-            int val = 0;
-            std::istringstream iss(s.substr(i + 1, 2));
-            iss >> std::hex >> val;
-=======
+
 string urlDecode(const string& s) {
     string result;
     for (size_t i = 0; i < s.size(); i++) {
@@ -755,7 +708,7 @@ string urlDecode(const string& s) {
             int val = 0;
             istringstream iss(s.substr(i + 1, 2));
             iss >> hex >> val;
->>>>>>> dev
+
             result += (char)val;
             i += 2;
         } else if (s[i] == '+') {
@@ -768,13 +721,10 @@ string urlDecode(const string& s) {
 }
 
 // ---- Handle API requests ----
-<<<<<<< HEAD
-std::string handleAPI(const std::string& method, const std::string& path,
-                      const std::string& body) {
-=======
+
 string handleAPI(const string& method, const string& path,
                       const string& body) {
->>>>>>> dev
+
     // GET /api/stats
     if (method == "GET" && path == "/api/stats") {
         return buildResponse(200, "application/json", gLibrary->getStatsJSON());
@@ -793,17 +743,12 @@ string handleAPI(const string& method, const string& path,
     // GET /api/items/search?id=X
     if (method == "GET" && path.find("/api/items/search") == 0) {
         auto qPos = path.find("?");
-<<<<<<< HEAD
-        if (qPos != std::string::npos) {
-            auto params = parseParams(path.substr(qPos + 1));
-            if (params.count("id")) {
-                int id = std::stoi(params["id"]);
-=======
+
         if (qPos != string::npos) {
             auto params = parseParams(path.substr(qPos + 1));
             if (params.count("id")) {
                 int id = stoi(params["id"]);
->>>>>>> dev
+
                 return buildResponse(200, "application/json",
                                      gLibrary->searchItemJSON(id));
             }
@@ -815,16 +760,7 @@ string handleAPI(const string& method, const string& path,
     if (method == "POST" && path == "/api/borrow") {
         auto params = parseParams(body);
         try {
-<<<<<<< HEAD
-            int memberId = std::stoi(params["memberId"]);
-            int itemId = std::stoi(params["itemId"]);
-            gLibrary->borrowItem(memberId, itemId);
-            return buildResponse(200, "application/json",
-                "{\"success\":true,\"message\":\"Item borrowed successfully.\"}");
-        } catch (const std::exception& e) {
-            return buildResponse(400, "application/json",
-                std::string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
-=======
+
             int memberId = stoi(params["memberId"]);
             int itemId = stoi(params["itemId"]);
             gLibrary->borrowItem(memberId, itemId);
@@ -833,7 +769,7 @@ string handleAPI(const string& method, const string& path,
         } catch (const exception& e) {
             return buildResponse(400, "application/json",
                 string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
->>>>>>> dev
+
         }
     }
 
@@ -841,19 +777,7 @@ string handleAPI(const string& method, const string& path,
     if (method == "POST" && path == "/api/return") {
         auto params = parseParams(body);
         try {
-<<<<<<< HEAD
-            int memberId = std::stoi(params["memberId"]);
-            int itemId = std::stoi(params["itemId"]);
-            int days = params.count("daysOverdue") ? std::stoi(params["daysOverdue"]) : 0;
-            double fine = gLibrary->returnItem(memberId, itemId, days);
-            std::ostringstream o;
-            o << "{\"success\":true,\"fine\":" << std::fixed << std::setprecision(2) << fine
-              << ",\"message\":\"Item returned. Fine: $" << std::fixed << std::setprecision(2) << fine << "\"}";
-            return buildResponse(200, "application/json", o.str());
-        } catch (const std::exception& e) {
-            return buildResponse(400, "application/json",
-                std::string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
-=======
+
             int memberId = stoi(params["memberId"]);
             int itemId = stoi(params["itemId"]);
             int days = params.count("daysOverdue") ? stoi(params["daysOverdue"]) : 0;
@@ -865,7 +789,7 @@ string handleAPI(const string& method, const string& path,
         } catch (const exception& e) {
             return buildResponse(400, "application/json",
                 string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
->>>>>>> dev
+
         }
     }
 
@@ -874,28 +798,7 @@ string handleAPI(const string& method, const string& path,
         auto params = parseParams(body);
         try {
             int id = gLibrary->getNextItemId();
-<<<<<<< HEAD
-            std::string type = params["type"];
-            std::string title = urlDecode(params["title"]);
-            int year = std::stoi(params["year"]);
 
-            if (type == "Book") {
-                std::string author = urlDecode(params["author"]);
-                std::string isbn = urlDecode(params["isbn"]);
-                std::string genre = urlDecode(params["genre"]);
-                *gLibrary += new Book(id, title, year, author, isbn, genre);
-            } else {
-                int issue = std::stoi(params["issueNumber"]);
-                std::string publisher = urlDecode(params["publisher"]);
-                std::string category = urlDecode(params["category"]);
-                *gLibrary += new Magazine(id, title, year, issue, publisher, category);
-            }
-            return buildResponse(200, "application/json",
-                "{\"success\":true,\"message\":\"Item added with ID " + std::to_string(id) + "\"}");
-        } catch (const std::exception& e) {
-            return buildResponse(400, "application/json",
-                std::string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
-=======
             string type = params["type"];
             string title = urlDecode(params["title"]);
             int year = stoi(params["year"]);
@@ -916,7 +819,7 @@ string handleAPI(const string& method, const string& path,
         } catch (const exception& e) {
             return buildResponse(400, "application/json",
                 string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
->>>>>>> dev
+
         }
     }
 
@@ -925,17 +828,12 @@ string handleAPI(const string& method, const string& path,
         auto params = parseParams(body);
         try {
             int id = gLibrary->getNextMemberId();
-<<<<<<< HEAD
-            std::string name = urlDecode(params["name"]);
-            std::string email = urlDecode(params["email"]);
-            std::string phone = urlDecode(params["phone"]);
-            std::string type = params.count("type") ? params["type"] : "Standard";
-=======
+
             string name = urlDecode(params["name"]);
             string email = urlDecode(params["email"]);
             string phone = urlDecode(params["phone"]);
             string type = params.count("type") ? params["type"] : "Standard";
->>>>>>> dev
+
 
             if (type == "Premium")
                 gLibrary->addMember(new PremiumMember(id, name, email, phone));
@@ -943,17 +841,12 @@ string handleAPI(const string& method, const string& path,
                 gLibrary->addMember(new Member(id, name, email, phone));
 
             return buildResponse(200, "application/json",
-<<<<<<< HEAD
-                "{\"success\":true,\"message\":\"Member added with ID " + std::to_string(id) + "\"}");
-        } catch (const std::exception& e) {
-            return buildResponse(400, "application/json",
-                std::string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
-=======
+
                 "{\"success\":true,\"message\":\"Member added with ID " + to_string(id) + "\"}");
         } catch (const exception& e) {
             return buildResponse(400, "application/json",
                 string("{\"success\":false,\"message\":\"") + e.what() + "\"}");
->>>>>>> dev
+
         }
     }
 
@@ -966,49 +859,34 @@ void handleClient(socket_t client) {
     int received = recv(client, buffer, sizeof(buffer) - 1, 0);
     if (received <= 0) { CLOSE_SOCKET(client); return; }
 
-<<<<<<< HEAD
-    std::string request(buffer, received);
 
-    // Parse method and path
-    std::string method, path;
-    std::istringstream reqStream(request);
-=======
     string request(buffer, received);
 
     // Parse method and path
     string method, path;
     istringstream reqStream(request);
->>>>>>> dev
+
     reqStream >> method >> path;
 
     // Handle OPTIONS (CORS preflight)
     if (method == "OPTIONS") {
-<<<<<<< HEAD
-        std::string resp = buildResponse(200, "text/plain", "");
-=======
+
         string resp = buildResponse(200, "text/plain", "");
->>>>>>> dev
+
         send(client, resp.c_str(), (int)resp.size(), 0);
         CLOSE_SOCKET(client);
         return;
     }
 
     // Extract body for POST requests
-<<<<<<< HEAD
-    std::string body;
-    auto bodyPos = request.find("\r\n\r\n");
-    if (bodyPos != std::string::npos)
-        body = request.substr(bodyPos + 4);
 
-    std::string response;
-=======
     string body;
     auto bodyPos = request.find("\r\n\r\n");
     if (bodyPos != string::npos)
         body = request.substr(bodyPos + 4);
 
     string response;
->>>>>>> dev
+
 
     // Route: API endpoints
     if (path.find("/api/") == 0) {
@@ -1016,15 +894,7 @@ void handleClient(socket_t client) {
     }
     // Route: serve static files
     else {
-<<<<<<< HEAD
-        std::string filePath = (path == "/") ? "index.html" : path.substr(1);
 
-        // Security: prevent directory traversal
-        if (filePath.find("..") != std::string::npos) {
-            response = buildResponse(400, "text/plain", "Bad Request");
-        } else {
-            std::string content = readFile(filePath);
-=======
         string filePath = (path == "/") ? "index.html" : path.substr(1);
 
         // Security: prevent directory traversal
@@ -1032,7 +902,7 @@ void handleClient(socket_t client) {
             response = buildResponse(400, "text/plain", "Bad Request");
         } else {
             string content = readFile(filePath);
->>>>>>> dev
+
             if (!content.empty()) {
                 response = buildResponse(200, getMimeType(filePath), content);
             } else {
@@ -1050,31 +920,15 @@ int main() {
     #ifdef _WIN32
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-<<<<<<< HEAD
-        std::cerr << "WSAStartup failed!\n";
-=======
+
         cerr << "WSAStartup failed!\n";
->>>>>>> dev
+
         return 1;
     }
     #endif
 
     initSampleData();
-<<<<<<< HEAD
-    std::cout << "\n";
-    std::cout << "  ╔══════════════════════════════════════════╗\n";
-    std::cout << "  ║   Library Management System - Server     ║\n";
-    std::cout << "  ║   http://localhost:8080                   ║\n";
-    std::cout << "  ╚══════════════════════════════════════════╝\n";
-    std::cout << "\n  [✓] Sample data loaded: "
-              << gLibrary->getCatalogue().size() << " items, "
-              << gLibrary->getMembers().size() << " members\n";
-    std::cout << "  [✓] Server starting on port 8080...\n\n";
 
-    socket_t serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (serverSocket == INVALID_SOCKET) {
-        std::cerr << "Failed to create socket.\n";
-=======
     cout << "\n";
     cout << "  ╔══════════════════════════════════════════╗\n";
     cout << "  ║   Library Management System - Server     ║\n";
@@ -1088,7 +942,7 @@ int main() {
     socket_t serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == INVALID_SOCKET) {
         cerr << "Failed to create socket.\n";
->>>>>>> dev
+
         return 1;
     }
 
@@ -1102,32 +956,25 @@ int main() {
     addr.sin_port = htons(8080);
 
     if (bind(serverSocket, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
-<<<<<<< HEAD
-        std::cerr << "Bind failed. Port 8080 may be in use.\n";
-=======
+
         cerr << "Bind failed. Port 8080 may be in use.\n";
->>>>>>> dev
+
         CLOSE_SOCKET(serverSocket);
         return 1;
     }
 
     if (listen(serverSocket, 10) == SOCKET_ERROR) {
-<<<<<<< HEAD
-        std::cerr << "Listen failed.\n";
-=======
+
         cerr << "Listen failed.\n";
->>>>>>> dev
+
         CLOSE_SOCKET(serverSocket);
         return 1;
     }
 
-<<<<<<< HEAD
-    std::cout << "  [✓] Listening on http://localhost:8080\n";
-    std::cout << "  [i] Press Ctrl+C to stop.\n\n";
-=======
+
     cout << "  [✓] Listening on http://localhost:8080\n";
     cout << "  [i] Press Ctrl+C to stop.\n\n";
->>>>>>> dev
+
 
     while (true) {
         sockaddr_in clientAddr{};
